@@ -24,13 +24,7 @@ int main() {
 
     dataTypes[4] = manualDataType;
 
-    printf("The size of `dataTypes` is: %lu\n\n", sizeof(dataTypes));
-
-    int lenDataTypes = sizeof(dataTypes) / sizeof(dataTypes[0]);
-    // NTS: sizeof(dataTypes) returns the size of the array in bytes
-    // When used in a loop `for (int i = 0; i < sizeof(dataTypes); i++)` we get a leak!
-
-    for (int i = 0; i < lenDataTypes; i++) {
+    for (int i = 0; i < sizeof(dataTypes); i++) {
         printf("Type: %s", dataTypes[i].name);
         printf("\nAbout %s: %s", dataTypes[i].name, dataTypes[i].description);
         printf("\nPrint format: %s", dataTypes[i].printFormat);
