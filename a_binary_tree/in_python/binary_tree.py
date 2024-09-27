@@ -10,34 +10,32 @@ class Node:
     right: Optional[object] = None
 
 
-def figure_out_b_tree(values: list[int]):
-    """Every tree consists of nodes.
-    The nodes contain left, right pointers and a value,
-    so each node is a mini-b-tree. Therefore we need to start with a node.
-    """
-    print("Running B Tree Thingy...\n\n")
-    tree = Node(12)
+class BinaryTree:
+    def __init__(self):
+        self.root = None
 
-    def determine_where_the_node_goes(new_value, parent=tree):
-        """So I think there's an aspect of left < root < right"""
-        if new_value > parent.value:
-            # look right
-            if parent.right:
-                determine_where_the_node_goes(new_value, parent.right)
+    def insert(self, value, root=None):
+        if root is None:
+            root = self.root
+
+        if not root:
+            self.root = Node(value)
+            return self
+
+        if value > self.root.value:
+            if self.root.right:
+                self.insert(value, root)
             else:
-                parent.right = Node(new_value)
-        elif new_value < parent.value:
-            # look left
-            if parent.left:
-                determine_where_the_node_goes(new_value, parent.left)
+                self.root.right = Node(value)
+        elif value < self.root.value:
+            if self.root.left:
+                self.insert(value, root)
             else:
-                parent.left = Node(new_value)
-
-    for i in values:
-        determine_where_the_node_goes(i)
-
-    return tree
+                self.root.left = Node(value)
 
 
 if __name__ == "__main__":
-    pprint(figure_out_b_tree([48, 22, 190, 4, 16, 7]))
+    tree = BinaryTree()
+    for i in [219, 498, 2, 34, 33, 665, 67, 345, 7, 8, 4]:
+        tree.insert(i)
+    pprint(tree.root)
